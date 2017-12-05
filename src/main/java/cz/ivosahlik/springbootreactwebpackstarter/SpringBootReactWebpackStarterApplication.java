@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SpringBootReactWebpackStarterApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(SpringBootReactWebpackStarterApplication.class, args);
+
+		System.out.println("Hot Loader Java Spring");
 	}
 }

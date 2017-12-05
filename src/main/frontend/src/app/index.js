@@ -5,6 +5,6 @@ import '../../style/style.css'
 
 
 ReactDOM.render(
-    <h1>Hello</h1>,
+    <h1>Hot Loader ReactJs</h1>,
     document.getElementById('root')
 )
