@@ -10,7 +10,6 @@
 
 	<name>spring-boot-react-webpack-starter</name>
 	<description>Demo project for Spring Boot and reactjs</description>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -22,6 +21,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+
+		<frontend-plugin.version>0.0.27</frontend-plugin.version>
+		<cobertura-plugin.version>2.7</cobertura-plugin.version>
+		<coveralls-plugin.version>4.0.0</coveralls-plugin.version>
+
+		<node.version>v5.7.0</node.version>
+		<npm.version>3.7.1</npm.version>
 	</properties>
 
 	<dependencies>
@@ -42,6 +48,75 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<!-- Cobertura -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>${cobertura-plugin.version}</version>
+				<configuration>
+					<format>xml</format>
+					<maxmem>256m</maxmem>
+					<aggregate>true</aggregate>
+					<instrumentation>
+						<!-- Exclude JPA meta-model generated classes -->
+						<ignores>
+							<ignore>**/*_.java</ignore>
+						</ignores>
+						<excludes>
+							<exclude>**/*_.class</exclude>
+						</excludes>
+					</instrumentation>
+					<check/>
+				</configuration>
+			</plugin>
+			<!-- Coveralls -->
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>${coveralls-plugin.version}</version>
+				<configuration>
+					<repoToken>your coveralls repository token goes here</repoToken>
+				</configuration>
+			</plugin>
+			<!-- Frontend -->
+			<!-- Frontend -->
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${frontend-plugin.version}</version>
+				<configuration>
+					<workingDirectory>src/main/frontend</workingDirectory>
+					<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+					<nodeVersion>${node.version}</nodeVersion>
+					<npmVersion>${npm.version}</npmVersion>
+					<installDirectory>target</installDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install</arguments>
+							<installDirectory>target</installDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>webpack build</id>
+						<goals>
+							<goal>webpack</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
