@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import '../../style/style.css'
+
+import App from './component/app/App';
+
 
 
 
 ReactDOM.render(
-    <h1>Hot Loader ReactJs</h1>,
+    <App/>,
     document.getElementById('root')
 )
